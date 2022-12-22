@@ -71,7 +71,7 @@ def findHolds(img,detector = None):
     # Otsu's threshold is intended to be used as the higher threshold with a
     # lower:upper ratio of 1:2. L2gradient is included for more precise results.
     edges = cv2.Canny(img,otsu, otsu * 2, L2gradient = True)
-    print(otsu)
+    print(f"Otsu's threshold: {otsu}")
 
     # Finds the contours of the image, without retaining the hierarchy
     contours, _ = cv2.findContours(edges,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
@@ -105,7 +105,7 @@ def getColorBin(img, tl, br):
     # Effecively quantizes the image when the histogram is made.
     # Useful for grouping similar colors.
     binLen = 4
-    numBins = 256 / binLen
+    numBins = int(256 / binLen)
 
     #Finds the most common color/in the histogram/for each color channel.
     binColor = map(
@@ -115,7 +115,7 @@ def getColorBin(img, tl, br):
 
     fullColor = map(lambda x: x * binLen, binColor)
 
-    return fullColor 
+    return fullColor
 
 def findColors(img,keypoints):
     # If no keypoints return nothing
@@ -140,7 +140,7 @@ def findColors(img,keypoints):
         br = (x + size, y + size)	
         tl = (x - size, y - size)
 
-        colors[i] = getColorBin(hsv,tl,br)
+        colors[i] = list(getColorBin(hsv,tl,br))
     
     return colors
 

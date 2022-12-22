@@ -35,8 +35,7 @@ shape = (x,y)
 #codec = cv2.cv.CV_FOURCC('Y','V','1','2')
 out = cv2.VideoWriter(path[:-4] + '-out.mp4',-1, 30.0, shape,True)
 
-
-
+# save all keypoints
 while(cap.isOpened()):
     # Capture frame-by-frame
     ret, frame = cap.read()
@@ -45,6 +44,12 @@ while(cap.isOpened()):
 
     # Find keypoints
     keypoints, hulls = findHolds(frame)
+    print('keypoint')
+    print(type(keypoints))
+    print(keypoints)
+
+    colors = findColors(frame, keypoints)
+    print(colors)
 
 
     frameWithKeypoints = cv2.drawKeypoints(frame,keypoints,-1,[0,0,255])
