@@ -23,7 +23,7 @@ while (True):
     i+=1
 
     file_path = "frames_" + "%04d" % i + ".png"
-    print file_path
+    print(file_path)
     frame = cv2.imread(file_path,1)
     if frame == None:
         break
@@ -38,7 +38,7 @@ while (True):
     frameWithKeypoints = cv2.drawKeypoints(frame,keypoints,-1,[0,0,255])
     results = np.concatenate((frame, frameWithKeypoints), axis=0)
     
-    print results.shape
+    print(results.shape)
 
     out.write(results)
 

@@ -9,7 +9,7 @@ import time
 
 # Determine output path of video
 i = 0
-directory = "C:/Users/SeanC/Documents/GitHub/NeuralClimb/Hold Detection/2D Space/webcam/"
+directory = "C:/Users/user/Desktop/RCP/NeuralClimb/output"
 abspath = os.path.abspath(directory)
 
 # Increment video number to not overwrite old files.
@@ -22,7 +22,7 @@ while (os.path.exists(abspath)):
 # Start webcam capture
 cap = cv2.VideoCapture(0)
 # Define the codec and create VideoWriter object
-out = cv2.VideoWriter("webcam\\"+relpath,-1, 15.0, (640*2, 960/2),True)
+out = cv2.VideoWriter("webcam\\"+relpath, -1, 15.0, (640*2, 960//2),True)
 detector = buildDetector()
 
 

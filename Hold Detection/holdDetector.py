@@ -22,7 +22,7 @@ def openImage():
 
 """ Object detection """
 
-def buildDetector(minArea = 25):
+def buildDetector(minArea = 5):
     # Setup SimpleBlobDetector parameters.
     params = cv2.SimpleBlobDetector_Params()
 
@@ -37,15 +37,15 @@ def buildDetector(minArea = 25):
 
     # Filter by Circularity
     params.filterByCircularity = False
-    params.minCircularity = 0.1
+    # params.minCircularity = 0.1
 
     # Filter by Convexity
     params.filterByConvexity = False
-    params.minConvexity = 0.1
+    # params.minConvexity = 0.1
         
     # Filter by Inertia
-    params.filterByInertia = True
-    params.minInertiaRatio = 0.05
+    params.filterByInertia = False
+    # params.minInertiaRatio = 0.05
 
     # Create a detector with the parameters
     ver = (cv2.__version__).split('.')
@@ -71,14 +71,14 @@ def findHolds(img,detector = None):
     # Otsu's threshold is intended to be used as the higher threshold with a
     # lower:upper ratio of 1:2. L2gradient is included for more precise results.
     edges = cv2.Canny(img,otsu, otsu * 2, L2gradient = True)
-    print otsu
+    print(otsu)
 
     # Finds the contours of the image, without retaining the hierarchy
     contours, _ = cv2.findContours(edges,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 
     # Applies convex hulls to each contour, ensuring each contour
     # is a closed polygon.
-    hulls = map(cv2.convexHull,contours)
+    hulls = list(map(cv2.convexHull,contours))
 
     # Draws contours onto a blank canvas
     mask = np.zeros(img.shape,np.uint8)
@@ -131,16 +131,16 @@ def findColors(img,keypoints):
     # Iterates through the keypoints and finds the most common
     # color at each keypoint.
     for i, key in enumerate(keypoints):
-    	x = int(key.pt[0])
-    	y = int(key.pt[1])
+        x = int(key.pt[0])
+        y = int(key.pt[1])
 
-    	size = int(math.ceil(key.size)) 
+        size = int(math.ceil(key.size)) 
 
         #Finds a rectangular window in which the keypoint fits
-    	br = (x + size, y + size)	
-    	tl = (x - size, y - size)
+        br = (x + size, y + size)	
+        tl = (x - size, y - size)
 
-    	colors[i] = getColorBin(hsv,tl,br)
+        colors[i] = getColorBin(hsv,tl,br)
     
     return colors
 

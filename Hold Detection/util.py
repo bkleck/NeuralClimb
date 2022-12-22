@@ -3,7 +3,7 @@
 import matplotlib as plt
 import cv2
 from PIL import Image
-import Tkinter as tk, Tkconstants, tkFileDialog
+import tkinter as tk, tkinter.constants as Tkconstants, tkinter.filedialog as tkFileDialog
 
 
 def openFile():
@@ -59,4 +59,4 @@ def showImage(image, title = "Image"):
         "Warning: Image is None"
         return
     cv2.imshow(title,image)
-    cv2.waitKey(0)
+    cv2.waitKey(1)

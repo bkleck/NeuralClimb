@@ -5,10 +5,16 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import cv2
 from holdDetector import findHolds, findColors, plotColors
+import argparse
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--video', type=str,
+                        help=('Path of input video.'))
+args = parser.parse_args()
 
-# Starting path
-path = 'C:/Users/SeanC/Documents/GitHub/NeuralClimb/Hold Detection/2D Space/Test3-converted.avi'
+# Get input video path
+video_dir_path = 'C:/Users/user/Desktop/RCP/NeuralClimb/videos/'
+path = video_dir_path + args.video
 
 # Open capture
 cap = cv2.VideoCapture(path)
@@ -27,7 +33,7 @@ shape = (x,y)
 
 # Open VideoWriter object
 #codec = cv2.cv.CV_FOURCC('Y','V','1','2')
-out = cv2.VideoWriter(path[:-4] + '-out.avi',-1, 30.0, shape,True)
+out = cv2.VideoWriter(path[:-4] + '-out.mp4',-1, 30.0, shape,True)
 
 
 
