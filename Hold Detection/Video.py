@@ -35,6 +35,10 @@ shape = (x,y)
 #codec = cv2.cv.CV_FOURCC('Y','V','1','2')
 out = cv2.VideoWriter(path[:-4] + '-out.mp4',-1, 30.0, shape,True)
 
+
+# keypoints at each frame is different, hence we will just save and plot all of them
+total_keypoints = ()
+
 # save all keypoints
 while(cap.isOpened()):
     # Capture frame-by-frame
@@ -44,15 +48,19 @@ while(cap.isOpened()):
 
     # Find keypoints
     keypoints, hulls = findHolds(frame)
-    print('keypoint')
-    print(type(keypoints))
-    print(keypoints)
+    total_keypoints += keypoints
+    total_keypoints = tuple(set(total_keypoints))
+
+    # print('keypoint')
+    # print(keypoints)
+    # print('total keypoints')
+    # print(total_keypoints)
 
     colors = findColors(frame, keypoints)
-    print(colors)
+    # print(colors)
 
 
-    frameWithKeypoints = cv2.drawKeypoints(frame,keypoints,-1,[0,0,255])
+    frameWithKeypoints = cv2.drawKeypoints(frame,total_keypoints,-1,[0,0,255])
     #cv2.drawContours(frame,hulls,-1,[255,0,0])
     results = np.concatenate((frame, frameWithKeypoints), axis=axis)
 
